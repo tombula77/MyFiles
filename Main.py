@@ -1,22 +1,40 @@
-from tkinter import *
+import sys
+import os.path
+
+from PyQt5.QtWidgets import *
+
 from configparser import ConfigParser
-import io
 
 import ConfigCreate
 
 config = ConfigParser()
 cfgfile = "config.ini"
-config.read('config.ini')
-width = config.getint('main', width)
-height = config.getint('main', height)
-geometry = width+'x'+height
+
+if not os.path.exists(cfgfile):
+    ConfigCreate.cfgWrite()
+else:
+    config.read(cfgfile)
+
+x_init = config.getint('main', 'x_init')
+y_init = config.getint('main', 'y_init')
+width = config.getint('main', 'width')
+height = config.getint('main', 'height')
+
+
+def empty():
+    pass
+
+
+class Window(QMainWindow):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setGeometry(x_init, y_init, width, height)
+        self.setWindowTitle('MyFiles')
+        self.setStyleSheet("background-color: lightgray;")
+
 
 if __name__ == "__main__":
-    Tk = Tk()
-    Tk.geometry(geometry)
-    Tk.title('MyFiles')
-    Tk.configure(bg='light dark')
-
-
-    Tk.mainloop()
-
+    app = QApplication([])
+    win = Window()
+    win.show()
+    sys.exit(app.exec_())
