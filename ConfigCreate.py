@@ -1,12 +1,12 @@
 from configparser import ConfigParser
-config = ConfigParser()
+parser = ConfigParser()
 cfgfile = "config.ini"
 
 def cfgWrite():
-    config.add_section('main')
-    config.set('main', 'x_init', '100')
-    config.set('main', 'y_init', '100')
-    config.set('main', 'width', '600')
-    config.set('main', 'height', '400')
+    parser.add_section('main')
+    parser.set('main', 'x_init', '100')
+    parser.set('main', 'y_init', '100')
+    parser.set('main', 'width', '600')
+    parser.set('main', 'height', '400')
     with open('config.ini', 'w') as f:
-        config.write(f)
+        parser.write(f)
